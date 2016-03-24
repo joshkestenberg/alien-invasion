@@ -18,12 +18,12 @@ Ok, problems.
 
 # Section 1 - Intro
 
-Output “hello world”.  
-The simplest program.
-Ask the user how old they are. Output how many times older they are than a 4 year old (eg if the user enter 25, the output is 6.25)
-requires prompting the user for input, and simple arithmetic.
-Output the current price of bitcoin
-requires fetching data from https://api.quadrigacx.com/v2/ticker and parsing the returned json value to get the “last” price
+Output “hello world”.  The simplest program.
+
+Ask the user how old they are. Output how many times older they are than a 4 year old (eg if the user enter 25, the output is 6.25).
+Requires prompting the user for input, and simple arithmetic.
+
+Output the current price of bitcoin. Requires fetching data from https://api.quadrigacx.com/v2/ticker and parsing the returned json value to get the “last” price
 
 You should read up on the following:
 
