@@ -38,9 +38,9 @@ may lead to aliens getting "trapped".
 
 You should create a program that reads in the world map, creates N aliens, and
 unleashes them. The program should run until all the aliens have been
-destroyed, or each alien has moved at least 10,000 times. When two aliens
-fight, print out a message like:
+destroyed, trapped, or each alien has moved at least 10,000 times.
 
+When two aliens fight, print out a message like:
 Bar has been destroyed by alien 10 and alien 34!
 
 (If you want to give them names, you may, but it is not required.) Once the
