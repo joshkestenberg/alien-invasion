@@ -8,6 +8,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"time"
 )
 
 //I've made the assumption that all cities will have one word names without spaces
@@ -78,6 +79,8 @@ func unleashAliens(cities []City, num int) ([]Alien, error) {
 		alien := Alien{Index: i}
 		//set range for random number and pick a number
 		rng := len(cities)
+		//seed with current time for variance
+		rand.Seed(time.Now().UTC().UnixNano())
 
 		random := rand.Intn(rng)
 		//use number to select city in which to place alien
@@ -90,11 +93,6 @@ func unleashAliens(cities []City, num int) ([]Alien, error) {
 }
 
 func houseKeeping(cities []City, aliens []Alien) ([]City, []Alien) {
-	var ctGame bool
-	var mvGame bool
-	var tpGame bool
-	var ddGame bool
-
 	var purgeCities []string
 
 	for i := 0; i < len(cities); i++ {
@@ -134,6 +132,11 @@ func houseKeeping(cities []City, aliens []Alien) ([]City, []Alien) {
 	}
 
 	//check if game is over; if there is any proof that game is not over, set respective var to true.
+	ctGame := false
+	mvGame := false
+	tpGame := false
+	ddGame := false
+
 	for _, city := range cities {
 		if city.Destroyed == false {
 			ctGame = true
@@ -143,7 +146,7 @@ func houseKeeping(cities []City, aliens []Alien) ([]City, []Alien) {
 		if alien.Dead == false {
 			ddGame = true
 		}
-		if alien.Trapped == false {
+		if alien.Trapped == false && alien.Dead == false {
 			tpGame = true
 		}
 		if alien.Moves < 10000 && alien.Dead == false && alien.Trapped == false {
@@ -153,16 +156,20 @@ func houseKeeping(cities []City, aliens []Alien) ([]City, []Alien) {
 	if ctGame == false {
 		fmt.Println("The world has been destroyed!")
 		os.Exit(0)
-	} else if ddGame == false {
+	}
+	if ddGame == false {
 		fmt.Println("All the aliens are dead. Perhaps we can rebuild..")
 		os.Exit(0)
-	} else if mvGame == false {
-		fmt.Println("All remaining aliens have moved 10,000 or more times! I, for one, welcome our new alien overlords!")
-		os.Exit(0)
-	} else if tpGame == false {
-		fmt.Println("All aliens are trapped! Attack now while they're immobile! God speed!")
+	}
+	if tpGame == false {
+		fmt.Println("All remaining aliens are trapped! Attack now while they're immobile! God speed!")
 		os.Exit(0)
 	}
+	if mvGame == false {
+		fmt.Println("All remaining aliens have moved 10,000 or more times! I, for one, welcome our new alien overlords!")
+		os.Exit(0)
+	}
+
 	//set all aliens moved back to false
 	for i := 0; i < len(aliens); i++ {
 		aliens[i].Moved = false
@@ -200,6 +207,9 @@ func move(cities []City, aliens []Alien) ([]City, []Alien) {
 				for mvCity == "" {
 					//set range for random number and pick a number
 					rng := 4
+					//seed with current time for variance
+					rand.Seed(time.Now().UTC().UnixNano())
+
 					random := rand.Intn(rng)
 					//use number to select to which city the alien moves
 					switch random {
